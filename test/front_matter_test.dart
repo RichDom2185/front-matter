@@ -1,8 +1,8 @@
 import 'package:test/test.dart';
-import 'package:front_matter/front_matter.dart' as fm;
-import 'package:front_matter/src/front_matter.dart';
-import 'package:front_matter/src/front_matter_document.dart';
-import 'package:front_matter/src/front_matter_exception.dart';
+import 'package:front_matter_web/front_matter.dart' as fm;
+import 'package:front_matter_web/src/front_matter.dart';
+import 'package:front_matter_web/src/front_matter_document.dart';
+import 'package:front_matter_web/src/front_matter_exception.dart';
 
 const String _defaultDelimiter = '---';
 const String _defaultContent = 'Hello, world!';
@@ -74,24 +74,5 @@ void main() {
     var input = '---\nINVALID\n---\nfoo';
     expect(() => fm.parse(input),
         throwsA(const TypeMatcher<FrontMatterException>()));
-  });
-
-  test('reads a file from disk and parses front matter', () async {
-    var result = await fm.parseFile('example/hello-world.md');
-    expect(result.data!['author'], equals('izolate'));
-  });
-
-  test('throws an error if file not found', () {
-    expect(
-        () async => await fm.parseFile('/path/to/nowhere'),
-        throwsA(predicate((dynamic e) =>
-            e is FrontMatterException && e.message == fileNotFoundError)));
-  });
-
-  test('throws an error if file type is not supported', () {
-    expect(
-        () async => await fm.parseFile('test/dart.jpeg'),
-        throwsA(predicate(
-            (dynamic e) => e is FrontMatterException && e.message == fileTypeError)));
   });
 }
