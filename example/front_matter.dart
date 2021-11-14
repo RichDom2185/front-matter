@@ -8,8 +8,8 @@ void example1() async {
 
   var doc = fm.parse(fileContents);
 
-  print("The author is ${doc.data['author']}");
-  print("The publish date is ${doc.data['date']}");
+  print("The author is ${doc.data!['author']}");
+  print("The publish date is ${doc.data!['date']}");
   print("The content is ${doc.content}");
 }
 
@@ -17,8 +17,8 @@ void example1() async {
 void example2() async {
   var doc = await fm.parseFile('example/hello-world.md');
 
-  print("The author is ${doc.data['author']}");
-  print("The publish date is ${doc.data['date']}");
+  print("The author is ${doc.data!['author']}");
+  print("The publish date is ${doc.data!['date']}");
   print("The content is ${doc.content}");
 }
 

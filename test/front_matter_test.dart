@@ -47,8 +47,8 @@ void main() {
 
     expect(result.toString(), equals(test.toString()));
     expect(result.content, equals(test.content));
-    expect(result.data['foo'], equals(test.data['foo']));
-    expect(result.data['baz'], equals(test.data['baz']));
+    expect(result.data!['foo'], equals(test.data['foo']));
+    expect(result.data!['baz'], equals(test.data['baz']));
   });
 
   test('removes any leading spaces and linebreaks', () {
@@ -56,7 +56,7 @@ void main() {
     var result = fm.parse('    \n\n\n${test.toString()}');
 
     expect(result.content, equals(test.content));
-    expect(result.data['foo'], equals(test.data['foo']));
+    expect(result.data!['foo'], equals(test.data['foo']));
   });
 
   test('uses custom delimiters', () {
@@ -66,7 +66,7 @@ void main() {
     tests.forEach((test) {
       var result = fm.parse(test.toString(), delimiter: test.delimiter);
       expect(result.content, equals(test.content));
-      expect(result.data['foo'], equals(test.data['foo']));
+      expect(result.data!['foo'], equals(test.data['foo']));
     });
   });
 
@@ -78,13 +78,13 @@ void main() {
 
   test('reads a file from disk and parses front matter', () async {
     var result = await fm.parseFile('example/hello-world.md');
-    expect(result.data['author'], equals('izolate'));
+    expect(result.data!['author'], equals('izolate'));
   });
 
   test('throws an error if file not found', () {
     expect(
         () async => await fm.parseFile('/path/to/nowhere'),
-        throwsA(predicate((e) =>
+        throwsA(predicate((dynamic e) =>
             e is FrontMatterException && e.message == fileNotFoundError)));
   });
 
@@ -92,6 +92,6 @@ void main() {
     expect(
         () async => await fm.parseFile('test/dart.jpeg'),
         throwsA(predicate(
-            (e) => e is FrontMatterException && e.message == fileTypeError)));
+            (dynamic e) => e is FrontMatterException && e.message == fileTypeError)));
   });
 }
